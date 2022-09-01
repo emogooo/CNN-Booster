@@ -14,25 +14,23 @@ labels = test_set.classes
 
 modelNames = os.listdir('E:/Github/CNN-Challenge-Workshop/Stage2-Workshop/models/')
 modelPredictions = list()
-#bestAcc = 0
-#bestLoss = 0
-#averageAcc = 0
+modelAccuracies = list()
 for name in modelNames:
     model = load_model(('E:/Github/CNN-Challenge-Workshop/Stage2-Workshop/models/' + name))
     modelPrediction = model.predict_generator(test_set, steps=test_set.samples/test_set.batch_size,verbose=1)
     modelPredictions.append(modelPrediction)
     
-    """
-    model = load_model(('E:/Github/CNN-Challenge-Workshop/Stage2-Workshop/models/' + name))
-    loss, acc = model.evaluate(test_set)
-    averageAcc += acc
-    if bestAcc < acc:
-        bestAcc = acc
-        bestLoss = loss
-    
-    """
-#averageAcc /= len(modelNames)
-#print("En iyi Modelin: Loss: " + "{:.2f}".format(bestLoss) + " Accuracy: " + "{:.3f}".format(bestAcc) + " Average Accuracy: " + "{:.3f}".format(averageAcc))
+    score = 0
+    for i in range(test_set.n):
+        if round(float(modelPrediction[i])) == labels[i]:
+            score += 1
+    score /= test_set.n
+    modelAccuracies.append(score)
+  
+bestAcc = max(modelAccuracies)
+averageAcc = sum(modelAccuracies) / len(modelAccuracies)
+
+print("En iyi Modelin: Accuracy: " + "{:.3f}".format(bestAcc) + " Average Accuracy: " + "{:.3f}".format(averageAcc))
 
 def generateFirstGeneration(populationNumber):
     firstGeneration = list()
@@ -114,7 +112,7 @@ def main():
     bestRun = 0
     runCounter = 0
     
-    while bestScore < 0.85:
+    while bestScore < 0.65:
         runCounter += 1
         score, gen, chromosome = run()
         if score > bestScore:

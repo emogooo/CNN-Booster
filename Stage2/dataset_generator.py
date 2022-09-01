@@ -53,5 +53,5 @@ def ayikla(tumResimler, csv, hastalik, train, test, validation):
         shutil.copy((tumResimler +'/'+ i), klasor)
         sayac += 1
 
-ayikla("E:/Github/NIH/images", "E:/Github/NIH/Data_Entry_2017.csv", "Infiltration", 2500, 1000, 2500)
-ayikla("E:/Github/NIH/images", "E:/Github/NIH/Data_Entry_2017.csv", "No Finding", 2500, 1000, 2500)
+ayikla("E:/Github/NIH/images", "E:/Github/NIH/Data_Entry_2017.csv", "Infiltration", 3500, 2500, 500)
+ayikla("E:/Github/NIH/images", "E:/Github/NIH/Data_Entry_2017.csv", "No Finding", 3500, 2500, 500)
